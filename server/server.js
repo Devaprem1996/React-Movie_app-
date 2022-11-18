@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser =  require ('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 //uses
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 //Mongoose connect to database 
-const CONNECTION_URL = "mongodb+srv://devaprem:Dev%40sep10@cluster0.c9eepgg.mongodb.net/movDB";
+const CONNECTION_URL = process.env.DATABASE
 mongoose.connect(CONNECTION_URL);
 
 // routes

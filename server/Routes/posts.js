@@ -4,7 +4,7 @@ const Posts = require("../Models/posts")
 
 router.route("/read").get((req, res) => {
     Posts.find({}, (err, founditems) => {
-        res.send(founditems)
+       res? res.send(founditems): console.log(err);
     })
 });
 
@@ -21,4 +21,23 @@ router.route("/createpost").post((req, res) => {
     newPost.save();
     console.log("posted");
 })
+
+router.route("/update/:id").put( (req, res) => {
+    Posts.findByIdAndUpdate({ _id: req.params.id }, {
+        Title: req.body.Title,
+        Poster: req.body.Poster,
+        Type: req.body.Type
+    })
+        .then((doc => { console.log(doc) }))
+        .catch((err) => { console.log(err) });
+    
+});
+
+router.route("/delete/:id").delete((req, res) => {
+    Posts.findByIdAndDelete({ _id: req.params.id })
+        .then((item) => { console.log(item) })
+        .catch((err)=>{console.log(err);})
+})
+
+
 module.exports = router
